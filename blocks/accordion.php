@@ -1,27 +1,56 @@
-<div class="accordion" id="accordion">
-
-  <?php 
-  while ( have_rows( 'folds' ) ) : the_row();
-      $fold_title = get_sub_field( 'title' );
-      $fold_content = get_sub_field( 'content' );
-  ?>
-  <div class="card">
-
-    <div class="card-header" id="heading-<?php echo get_row_index(); ?>">
-      <h2 class="my-0">
-        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-<?php echo get_row_index(); ?>" aria-expanded="false" aria-controls="collapse-<?php echo get_row_index(); ?>">
-        <?php echo $fold_title; ?>
-        </button>
-      </h2>
-    </div>
-
-    <div id="collapse-<?php echo get_row_index(); ?>" class="collapse" aria-labelledby="heading-<?php echo get_row_index(); ?>" data-parent="#accordion">
-      <div class="card-body">
-        <?php echo $fold_content; ?>
-      </div>
-    </div>
-
+<div class="container-accord">
+  <div class="text-block-accord">
+    <h2><?php echo esc_html(get_field('text_block_subtitle')); ?></h2>
+    <p><?php echo esc_html(get_field('text_block_title')); ?></p>
   </div>
-  <?php endwhile; ?>
 
+  <div class="accordion-wrapper">
+    <?php
+    // Check if the repeater field has rows of data
+    if (have_rows('accordion_repeater')) :
+      // Loop through the rows of data for the accordion items
+      while (have_rows('accordion_repeater')) : the_row();
+        $header = get_sub_field('tips_title');
+        $content = get_sub_field('tips_content');
+        ?>
+        <button class="accordion"><?php echo $header; ?></button>
+        <div class="panel">
+          <p><?php echo $content; ?></p>
+        </div>
+        <?php
+
+        $header = get_sub_field('weather_title');
+        $content = get_sub_field('weather_content');
+        ?>
+        <button class="accordion"><?php echo $header; ?></button>
+        <div class="panel">
+          <p><?php echo $content; ?></p>
+        </div>
+        <?php
+
+        $header = get_sub_field('visa_title');
+        $content = get_sub_field('visa_content');
+        ?>
+        <button class="accordion"><?php echo $header; ?></button>
+        <div class="panel">
+          <p><?php echo $content; ?></p>
+        </div>
+        <?php
+
+        $header = get_sub_field('destinations_title');
+        $content = get_sub_field('destinations_content');
+        ?>
+        <button class="accordion"><?php echo $header; ?></button>
+        <div class="panel">
+          <p><?php echo $content; ?></p>
+        </div>
+        <?php
+
+      endwhile;
+    else :
+      echo '';
+    endif;
+    ?>
+  </div>
 </div>
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/template-parts/blocks/accordion/accordion.js"></script>
